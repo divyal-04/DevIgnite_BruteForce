@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile</title>
+</head>
+<body>
+    <h1>Profile</h1>
+
+    <!-- Logout Button -->
+    <form action="{% url 'logout' %}" method="post">
+        {% csrf_token %}
+        <button type="submit">Logout</button>
+    </form>
+
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <input type="file" name="image">
+        <input type="text" name="full_name" placeholder="Full Name" value="{{ profile.full_name }}">
+        <textarea name="bio" placeholder="Bio">{{ profile.bio }}</textarea>
+        <textarea name="skills" placeholder="Skills">{{ profile.skills }}</textarea>
+        <button type="submit">Update Profile</button>
+    </form>
+    {% load static %}
+
+    <h2>Profile Details</h2>
+    <!-- Ensure the image source reflects the correct path -->
+    {% if profile.image %}
+    <img src="{% url 'profile_image' username=username image_name=filename %}" alt="Profile Image">
+    {% endif %}
+    <p>Full Name: {{ profile.full_name }}</p>
+    <p>Bio: {{ profile.bio }}</p>
+    <p>Skills: {{ profile.skills }}</p>
+    
+    <!-- Starred Projects Section -->
+    <h2>Starred Projects</h2>
+    <ul>
+        {% for starred_project in starred_projects %}
+            <li>{{ starred_project.project.project_title }}</li>
+        {% empty %}
+            <li>No starred projects yet</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

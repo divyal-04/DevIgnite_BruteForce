@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - MyProjects</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <style>
+        body {
+            background-color: #0a0a0a;
+            color: #fff;
+            font-family: 'Poppins', sans-serif;
+        }
+        .container {
+            margin-top: 50px;
+        }
+        .card {
+            background-color: #1e1e1e;
+            border: none;
+            border-radius: 15px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .card-title {
+            text-align: center;
+            font-size: 2rem;
+            margin-bottom: 30px;
+            color: #fff;
+        }
+        .form-control {
+            background-color: #333;
+            border: none;
+            border-radius: 8px;
+            color: #fff;
+        }
+        .form-control:focus {
+            background-color: #444;
+            color: #fff;
+        }
+        .btn-primary {
+            background-color: #007bff;
+            border: none;
+            border-radius: 8px;
+            width: 100%;
+        }
+        .btn-primary:hover {
+            background-color: #0056b3;
+        }
+        .message {
+            color: #ff5555;
+            text-align: center;
+        }
+        a {
+            color: #007bff;
+        }
+        a:hover {
+            color: #0056b3;
+        }
+        .custom-btn {
+font-weight:500;
+        border: none;
+        transition: background-color 0.3s, color 0.3s;
+    }
+    .form-control::placeholder {
+        color: #fff;
+        opacity: 0.7;
+    }
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h1 class="card-title">Login</h1>
+                        {% for message in messages %}
+                        <p class="message">{{ message }}</p>
+                        {% endfor %}
+                        <form method="post" action="{% url 'login' %}">
+                            {% csrf_token %}
+                            <div class="mb-3">
+                                <input type="email" class="form-control" placeholder="Email" name="email" id="email" required value="{{ email }}">
+                            </div>
+                            <div class="mb-3">
+                                <input type="password" class="form-control" placeholder="Password" id="password" name="pass" required>
+                            </div>
+                            <div class="mb-3">
+                                <a href="{% url 'signup' %}" style="color: #ff7f0d;">Signup</a>
+                            </div>
+                            <button type="submit" class="btn btn-primary btn-sm custom-btn" style="background-color: #ff7f0d;">Log In</button>
+                        </form>
+                        <br>
+                        {% if error_message %}
+                        <p class="message">{{ error_message }}</p>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

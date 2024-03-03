@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Signup - MyProjects</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <style>
+        body {
+            background-color: #0a0a0a;
+            color: #fff;
+            font-family: 'Poppins', sans-serif;
+        }
+        .container {
+            margin-top: 50px;
+        }
+        .card {
+            background-color: #1e1e1e;
+            border: none;
+            border-radius: 15px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .card-title {
+            text-align: center;
+            font-size: 2rem;
+            margin-bottom: 30px;
+            color: #fff;
+        }
+        .form-control {
+            background-color: #333;
+            border: none;
+            border-radius: 8px;
+            color: #fff;
+        }
+        .form-control:focus {
+            background-color: #444;
+            color: #fff;
+        }
+        .btn-primary {
+            background-color: #007bff;
+            border: none;
+            border-radius: 8px;
+            width: 100%;
+        }
+        .btn-primary:hover {
+            background-color: #0056b3;
+        }
+        .message {
+            color: #ff5555;
+            text-align: center;
+        }
+        a {
+            color: #007bff;
+        }
+        a:hover {
+            color: #0056b3;
+        }
+        .form-control::placeholder {
+        color: #fff;
+        opacity: 0.7;
+    }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h1 class="card-title">Signup</h1>
+                        <form method="post" action="{% url 'signup' %}" onsubmit="return validateForm()">
+                            {% csrf_token %}
+                            <div class="mb-3">
+                                <input type="text" class="form-control" placeholder="Username" name="username" id="username" required value="{{ userdata.username }}">
+                            </div>
+                            <div class="mb-3">
+                                <input type="email" class="form-control" placeholder="Email" name="email" id="email" required value="{{ userdata.useremail }}">
+                            </div>
+                            <div class="mb-3">
+                                <input type="password" class="form-control" placeholder="Password" id="password1" name="password1" required>
+                            </div>
+                            <div class="mb-3">
+                                <input type="password" class="form-control" placeholder="Confirm Password" id="password2" name="password2" required>
+                            </div>
+                            <div class="mb-3">
+                              <a href="{% url 'home' %}" style="color: #ff7f0d;">Login</a>
+                          </div>
+                            <button type="submit"class="btn btn-primary btn-sm custom-btn" style="background-color: #ff7f0d;">Signup</button>
+                        </form>
+                        <br>
+                        <p class="message">{{ error_message }}</p>
+                        <p class="message">{{ success_message }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        function validateForm() {
+            var username = document.getElementById('username').value;
+            var email = document.getElementById('email').value;
+            var password1 = document.getElementById('password1').value;
+            var password2 = document.getElementById('password2').value;
+
+            // Check if username contains spaces
+            if (/\s/.test(username)) {
+                alert('Username cannot contain spaces.');
+                return false;
+            }
+
+            // Check if all fields are filled
+            if (username === '' || email === '' || password1 === '' || password2 === '') {
+                document.querySelector('.message').innerHTML = 'Please fill in all required fields.';
+                return false;
+            }
+
+            // Check if passwords match
+            if (password1 !== password2) {
+                document.querySelector('.message').innerHTML = 'Your password and confirmation password do not match.';
+                return false;
+            }
+
+            return true; // Allow form submission if all checks pass
+        }
+
+        // Prevent form resubmission on refresh
+        if (window.history.replaceState) {
+            window.history.replaceState(null, null, window.location.href);
+        }
+    </script>
+</body>
+</html>
