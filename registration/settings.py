@@ -154,4 +154,4 @@ EMAIL_USE_TLS = True
 EMAIL_PORT = 587
 EMAIL_FROM = 'your_email'
 EMAIL_HOST_USER = 'your_email'
-EMAIL_HOST_PASSWORD = 'hyour_app_password'
+EMAIL_HOST_PASSWORD = 'your_app_password'
